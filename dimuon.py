@@ -2,15 +2,17 @@
 #
 # Plot dimuon mass distribution for SWC HEP 2015
 #
-from ROOT import TFile, TH1D
+from ROOT import TFile, TH1D, TLorentzVector
 from math import cos, sin, tan, sqrt
 
 class Particle:
     def __init__(self, energy, qpt, phi, theta):
-        self.energy = energy
         self.qpt    = qpt
-        self.phi    = phi
-        self.theta  = theta
+        pt = abs(qpt)
+        px = pt * cos(phi)
+        py = pt * sin(phi)
+        pz = pt / tan(theta)
+        self.four_mtm = TLorentzVector(px, py, pz, energy)
 
 def tree_from_file(path):
     global file_events
@@ -19,25 +21,8 @@ def tree_from_file(path):
     return tree_events
     
 def inv_mass_from_pair(pair):
-    e_a  = pair[0].energy
-    pt_a = abs(pair[0].qpt)
-    phi_a = pair[0].phi
-    theta_a = pair[0].theta
-    px_a = pt_a * cos(phi_a)
-    py_a = pt_a * sin(phi_a)
-    pz_a = pt_a / tan(theta_a)
-    e_b  = pair[1].energy
-    pt_b = abs(pair[1].qpt)
-    phi_b = pair[1].phi
-    theta_b = pair[1].theta
-    px_b = pt_b * cos(phi_b)
-    py_b = pt_b * sin(phi_b)
-    pz_b = pt_b / tan(theta_b)
-    e = e_a + e_b
-    px = px_a + px_b
-    py = py_a + py_b
-    pz = pz_a + pz_b
-    return sqrt(e*e - (px*px+py*py+pz*pz))
+    four_mtm = pair[0].four_mtm + pair[1].four_mtm
+    return four_mtm.M()
 
 def dimuon_masses(tree):
     h = TH1D("hist_m", "dimuon mass", 100, 0, 200)
