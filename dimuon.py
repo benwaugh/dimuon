@@ -1,3 +1,4 @@
+#!/bin/env python
 #
 # Plot dimuon mass distribution for SWC HEP 2015
 #
