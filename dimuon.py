@@ -21,7 +21,12 @@ def dimuon_masses(tree):
     return h
 
 def find_pairs(particles):
-    return []
+    pairs = []
+    num_particles = len(particles)
+    for i_first in xrange(num_particles):
+        for i_second in xrange(i_first+1, num_particles):
+            pairs.append(None)
+    return pairs
 
 if __name__ == '__main__':
     tree_events = tree_from_file("test_data/events.root")
