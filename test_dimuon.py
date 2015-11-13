@@ -1,5 +1,6 @@
-from dimuon import find_pairs
+from dimuon import *
 from nose.tools import *
+from math import pi
 
 class DummyParticle:
     def __init__(self, qpt):
@@ -29,3 +30,9 @@ def test_two_particles_like_sign():
     particles = [pos1,pos2]
     pairs = find_pairs(particles)
     assert_equal(len(pairs), 0)
+
+def test_inv_mass_zero():
+    pos = Particle(1.0, +1.0,  0, pi/2) # massless particle with pt = 1 GeV
+    neg = Particle(1.0, -1.0, pi, pi/2) # massless, pt = 1 GeV, opposite direction
+    assert_equal(inv_mass_from_pair((pos,neg)), 2.0)
+    
