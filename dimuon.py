@@ -28,7 +28,7 @@ def find_pairs(particles):
             p_first = particles[i_first]
             p_second = particles[i_second]
             if p_first.qpt * p_second.qpt < 0:
-                pairs.append(None)
+                pairs.append( (p_first, p_second) )
     return pairs
 
 if __name__ == '__main__':

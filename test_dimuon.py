@@ -21,7 +21,7 @@ def test_two_particles_unlike_sign():
     neg = DummyParticle(-1)
     particles = [pos,neg]
     pairs = find_pairs(particles)
-    assert_equal(len(pairs), 1)
+    assert_equal(pairs, [(pos,neg)] )
 
 def test_two_particles_like_sign():
     pos1 = DummyParticle(+1)
