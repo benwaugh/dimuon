@@ -31,7 +31,7 @@ def test_two_particles_like_sign():
     pairs = find_pairs(particles)
     assert_equal(len(pairs), 0)
 
-def test_inv_mass_zero():
+def test_inv_mass_zero_mass_particles():
     pos = Particle(1.0, +1.0,  0, pi/2) # massless particle with pt = 1 GeV
     neg = Particle(1.0, -1.0, pi, pi/2) # massless, pt = 1 GeV, opposite direction
     assert_equal(inv_mass_from_pair((pos,neg)), 2.0)
