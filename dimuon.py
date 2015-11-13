@@ -5,10 +5,11 @@
 from ROOT import TFile, TH1D
 
 class Particle:
-    def __init__(self, qpt, phi, theta):
-        self.qpt   = qpt
-        self.phi   = phi
-        self.theta = theta
+    def __init__(self, energy, qpt, phi, theta):
+        self.energy = energy
+        self.qpt    = qpt
+        self.phi    = phi
+        self.theta  = theta
 
 def tree_from_file(path):
     global file_events
@@ -27,7 +28,8 @@ def dimuon_masses(tree):
         particles = []
         n_particles = tree.nPart
         for i_particle in xrange(n_particles):
-            particle = Particle(tree.qpt[i_particle], tree.phi[i_particle],          tree.theta[i_particle])
+            e = tree.E[i_particle]
+            particle = Particle(e, tree.qpt[i_particle], tree.phi[i_particle], tree.theta[i_particle])
             particles.append(particle)
         pairs = find_pairs(particles)
         for pair in pairs:
