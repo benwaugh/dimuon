@@ -25,7 +25,10 @@ def find_pairs(particles):
     num_particles = len(particles)
     for i_first in xrange(num_particles):
         for i_second in xrange(i_first+1, num_particles):
-            pairs.append(None)
+            p_first = particles[i_first]
+            p_second = particles[i_second]
+            if p_first.qpt * p_second.qpt < 0:
+                pairs.append(None)
     return pairs
 
 if __name__ == '__main__':
