@@ -15,4 +15,3 @@ for i_event in xrange(n_events):
 
 h = TH1D("hist_m", "dimuon mass", 100, 0, 200)
 h.Draw()
-raw_input("Press return to exit")
