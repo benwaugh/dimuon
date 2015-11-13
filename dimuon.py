@@ -3,11 +3,11 @@
 # Plot dimuon mass distribution for SWC HEP 2015
 #
 from ROOT import TFile, TH1D, TLorentzVector
-from math import cos, sin, tan, sqrt
+from math import cos, sin, tan, sqrt, copysign
 
 class Particle:
     def __init__(self, energy, qpt, phi, theta):
-        self.qpt    = qpt
+        self.q = int(copysign(1,qpt)) # get charge (+1 or -1) from sign of pt
         pt = abs(qpt)
         px = pt * cos(phi)
         py = pt * sin(phi)
@@ -48,7 +48,7 @@ def find_pairs(particles):
         for i_second in xrange(i_first+1, num_particles):
             p_first = particles[i_first]
             p_second = particles[i_second]
-            if p_first.qpt * p_second.qpt < 0:
+            if p_first.q * p_second.q < 0:
                 pairs.append( (p_first, p_second) )
     return pairs
 

@@ -3,8 +3,8 @@ from nose.tools import *
 from math import pi
 
 class DummyParticle:
-    def __init__(self, qpt):
-        self.qpt = qpt
+    def __init__(self, q):
+        self.q = q
 
 def test_no_particles():
     particles = []
