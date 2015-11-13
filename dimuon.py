@@ -4,19 +4,27 @@
 #
 from ROOT import TFile, TH1D
 
+class Particle:
+    def __init__(self, qpt, phi, theta):
+        self.qpt   = qpt
+        self.phi   = phi
+        self.theta = theta
+
 def tree_from_file(path):
     global file_events
     file_events = TFile(path)
     tree_events = file_events.Get("events")
-    print type(tree_events)
     return tree_events
     
 def dimuon_masses(tree):
     n_events = tree.GetEntries()
     for i_event in xrange(n_events):
         tree.GetEntry(i_event)
+        particles = []
         n_particles = tree.nPart
-        print "Number of particles = " + str(n_particles)
+        for i_particle in xrange(n_particles):
+            particle = Particle(tree.qpt[i_particle], tree.phi[i_particle], tree.theta[i_particle])
+        pairs = find_pairs(particles)
     h = TH1D("hist_m", "dimuon mass", 100, 0, 200)
     return h
 
@@ -33,6 +41,5 @@ def find_pairs(particles):
 
 if __name__ == '__main__':
     tree_events = tree_from_file("test_data/events.root")
-    print type(tree_events)
     hist_dimuon_mass = dimuon_masses(tree_events)
     hist_dimuon_mass.Draw()
