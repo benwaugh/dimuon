@@ -16,16 +16,23 @@ def tree_from_file(path):
     tree_events = file_events.Get("events")
     return tree_events
     
+def inv_mass_from_pair(pair):
+    return 0.0
+
 def dimuon_masses(tree):
+    h = TH1D("hist_m", "dimuon mass", 100, 0, 200)
     n_events = tree.GetEntries()
     for i_event in xrange(n_events):
         tree.GetEntry(i_event)
         particles = []
         n_particles = tree.nPart
         for i_particle in xrange(n_particles):
-            particle = Particle(tree.qpt[i_particle], tree.phi[i_particle], tree.theta[i_particle])
+            particle = Particle(tree.qpt[i_particle], tree.phi[i_particle],          tree.theta[i_particle])
+            particles.append(particle)
         pairs = find_pairs(particles)
-    h = TH1D("hist_m", "dimuon mass", 100, 0, 200)
+        for pair in pairs:
+            m = inv_mass_from_pair(pair)
+            h.Fill(m)
     return h
 
 def find_pairs(particles):
