@@ -19,7 +19,8 @@ def dimuon_masses(tree):
     h = TH1D("hist_m", "dimuon mass", 100, 0, 200)
     return h
 
-tree_events = tree_from_file("test_data/events.root")
-print type(tree_events)
-hist_dimuon_mass = dimuon_masses(tree_events)
-hist_dimuon_mass.Draw()
+if __name__ == '__main__':
+    tree_events = tree_from_file("test_data/events.root")
+    print type(tree_events)
+    hist_dimuon_mass = dimuon_masses(tree_events)
+    hist_dimuon_mass.Draw()
